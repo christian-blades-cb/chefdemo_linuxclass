@@ -1,0 +1,40 @@
+#user  nobody;
+worker_processes  2;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    passenger_root <%= `/usr/local/bin/passenger-config --root` %>;
+    passenger_ruby /usr/bin/ruby;
+
+    passenger_max_pool_size 6;
+    passenger_log_level 0;
+
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    access_log off;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  30;
+
+    gzip  on;
+    gzip_types text/json application/json text/plain application/xml;
+    gzip_comp_level 3;
+
+    server {
+    	rack_env     production;
+        listen       80;
+        server_name  _;
+        passenger_min_instances 4;
+
+        root  <%= File.join(node[:app][:root_dir], 'public') %>;
+
+        passenger_enabled on;
+        passenger_use_global_queue on;
+    }
+}

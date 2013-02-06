@@ -1,0 +1,7 @@
+Bluepill.application("nginx") do |app|
+  app.process("nginx") do |process|
+    process.pid_file = "/opt/nginx/logs/nginx.pid"
+    process.start_command = "/opt/nginx/sbin/nginx"
+    process.daemonize = true
+  end
+end

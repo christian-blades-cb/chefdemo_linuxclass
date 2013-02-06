@@ -1,0 +1,4 @@
+source :rubygems
+
+gem 'hello_linuxclass', :git => "https://github.com/christian-blades-cb/hello_linuxclass"
+gem 'thin'
